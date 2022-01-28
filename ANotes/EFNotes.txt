@@ -1,0 +1,137 @@
+C:\Users\Siraj\source\repos\Identity And Access Management>dotnet ef migrations add "Initial" -c OpenIddictContext
+Build started...
+Build succeeded.
+The Entity Framework tools version '5.0.12' is older than that of the runtime '6.0.0'. Update the tools for the latest features and bug fixes. See https://aka.ms/AAc1fbw for more information.
+info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+      Entity Framework Core 6.0.0 initialized 'OpenIddictContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.0' with options: None
+Done. To undo this action, use 'ef migrations remove'
+
+C:\Users\Siraj\source\repos\Identity And Access Management>dotnet ef database update
+Build started...
+Build succeeded.
+The Entity Framework tools version '5.0.12' is older than that of the runtime '6.0.0'. Update the tools for the latest features and bug fixes. See https://aka.ms/AAc1fbw for more information.
+info: Microsoft.EntityFrameworkCore.Infrastructure[10403]
+      Entity Framework Core 6.0.0 initialized 'OpenIddictContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.0' with options: None
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (4,152ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
+      CREATE DATABASE [IdentityAndAccessManagement];
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2,092ms) [Parameters=[], CommandType='Text', CommandTimeout='60']
+      IF SERVERPROPERTY('EngineEdition') <> 5
+      BEGIN
+          ALTER DATABASE [IdentityAndAccessManagement] SET READ_COMMITTED_SNAPSHOT ON;
+      END;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (141ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (239ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [__EFMigrationsHistory] (
+          [MigrationId] nvarchar(150) NOT NULL,
+          [ProductVersion] nvarchar(32) NOT NULL,
+          CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (124ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (151ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT [MigrationId], [ProductVersion]
+      FROM [__EFMigrationsHistory]
+      ORDER BY [MigrationId];
+info: Microsoft.EntityFrameworkCore.Migrations[20402]
+      Applying migration '20211216144429_Initial'.
+Applying migration '20211216144429_Initial'.
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (52ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [OpenIddictApplications] (
+          [Id] nvarchar(450) NOT NULL,
+          [ClientId] nvarchar(100) NULL,
+          [ClientSecret] nvarchar(max) NULL,
+          [ConcurrencyToken] nvarchar(50) NULL,
+          [ConsentType] nvarchar(50) NULL,
+          [DisplayName] nvarchar(max) NULL,
+          [DisplayNames] nvarchar(max) NULL,
+          [Permissions] nvarchar(max) NULL,
+          [PostLogoutRedirectUris] nvarchar(max) NULL,
+          [Properties] nvarchar(max) NULL,
+          [RedirectUris] nvarchar(max) NULL,
+          [Requirements] nvarchar(max) NULL,
+          [Type] nvarchar(50) NULL,
+          CONSTRAINT [PK_OpenIddictApplications] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (15ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [OpenIddictScopes] (
+          [Id] nvarchar(450) NOT NULL,
+          [ConcurrencyToken] nvarchar(50) NULL,
+          [Description] nvarchar(max) NULL,
+          [Descriptions] nvarchar(max) NULL,
+          [DisplayName] nvarchar(max) NULL,
+          [DisplayNames] nvarchar(max) NULL,
+          [Name] nvarchar(200) NULL,
+          [Properties] nvarchar(max) NULL,
+          [Resources] nvarchar(max) NULL,
+          CONSTRAINT [PK_OpenIddictScopes] PRIMARY KEY ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (85ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [OpenIddictAuthorizations] (
+          [Id] nvarchar(450) NOT NULL,
+          [ApplicationId] nvarchar(450) NULL,
+          [ConcurrencyToken] nvarchar(50) NULL,
+          [CreationDate] datetime2 NULL,
+          [Properties] nvarchar(max) NULL,
+          [Scopes] nvarchar(max) NULL,
+          [Status] nvarchar(50) NULL,
+          [Subject] nvarchar(400) NULL,
+          [Type] nvarchar(50) NULL,
+          CONSTRAINT [PK_OpenIddictAuthorizations] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_OpenIddictAuthorizations_OpenIddictApplications_ApplicationId] FOREIGN KEY ([ApplicationId]) REFERENCES [OpenIddictApplications] ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (67ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [OpenIddictTokens] (
+          [Id] nvarchar(450) NOT NULL,
+          [ApplicationId] nvarchar(450) NULL,
+          [AuthorizationId] nvarchar(450) NULL,
+          [ConcurrencyToken] nvarchar(50) NULL,
+          [CreationDate] datetime2 NULL,
+          [ExpirationDate] datetime2 NULL,
+          [Payload] nvarchar(max) NULL,
+          [Properties] nvarchar(max) NULL,
+          [RedemptionDate] datetime2 NULL,
+          [ReferenceId] nvarchar(100) NULL,
+          [Status] nvarchar(50) NULL,
+          [Subject] nvarchar(400) NULL,
+          [Type] nvarchar(50) NULL,
+          CONSTRAINT [PK_OpenIddictTokens] PRIMARY KEY ([Id]),
+          CONSTRAINT [FK_OpenIddictTokens_OpenIddictApplications_ApplicationId] FOREIGN KEY ([ApplicationId]) REFERENCES [OpenIddictApplications] ([Id]),
+          CONSTRAINT [FK_OpenIddictTokens_OpenIddictAuthorizations_AuthorizationId] FOREIGN KEY ([AuthorizationId]) REFERENCES [OpenIddictAuthorizations] ([Id])
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (154ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE UNIQUE INDEX [IX_OpenIddictApplications_ClientId] ON [OpenIddictApplications] ([ClientId]) WHERE [ClientId] IS NOT NULL;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (45ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_OpenIddictAuthorizations_ApplicationId_Status_Subject_Type] ON [OpenIddictAuthorizations] ([ApplicationId], [Status], [Subject], [Type]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (23ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE UNIQUE INDEX [IX_OpenIddictScopes_Name] ON [OpenIddictScopes] ([Name]) WHERE [Name] IS NOT NULL;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_OpenIddictTokens_ApplicationId_Status_Subject_Type] ON [OpenIddictTokens] ([ApplicationId], [Status], [Subject], [Type]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (15ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_OpenIddictTokens_AuthorizationId] ON [OpenIddictTokens] ([AuthorizationId]);
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (15ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE UNIQUE INDEX [IX_OpenIddictTokens_ReferenceId] ON [OpenIddictTokens] ([ReferenceId]) WHERE [ReferenceId] IS NOT NULL;
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (127ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+      VALUES (N'20211216144429_Initial', N'6.0.0');
+Done.

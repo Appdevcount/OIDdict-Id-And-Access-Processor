@@ -1,0 +1,34 @@
+﻿@using Id_And_Access_Processor
+@model List<ClaimsStore>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Claims</h1>
+<a class="btn btn-primary" asp-controller="ClaimsManager" asp-action="CreateClaim" >Create Claim</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Claim Type</th>
+            <th>Claim Value</th>
+            <th>Description</th>
+            @*<th>Claims</th>*@
+            <th>User Or Role Claim</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.ClaimType</td>
+                <td>@user.ClaimValue</td>
+                <td>@user.Description</td>
+                <td>@user.UserOrRoleClaim</td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="ClaimsManager" asp-action="UpdateClaim" asp-route-Id="@user.Id">Manage Claims</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Authorization Server</h1>
+</div>
+@using Microsoft.AspNetCore.Authentication
+
+@if (User.Identity.IsAuthenticated)
+{
+    var authenticationResult = await Context.AuthenticateAsync();
+    var issued = authenticationResult.Properties.Items[".issued"];
+    var expires = authenticationResult.Properties.Items[".expires"];
+    <div>
+        <p>You are signed in as</p>
+        <h2>@User.Identity.Name</h2>
+        <hr/>
+        <dl>
+            <dt>Issued</dt>
+            <dd>@issued</dd>
+            <dt>Expires</dt>
+            <dd>@expires</dd>
+        </dl>
+        <dl>
+              <dt>_AuthenticationResult.Properties.Items</dt>
+            
+              @foreach(var prop in authenticationResult.Properties.Items){
+            <dt>@prop.Key</dt>
+            <dd>@prop.Value</dd>}
+            <dt>_User.Claims</dt>
+            @foreach(var claim in User.Claims){
+            <dt>@claim.Type</dt>
+            <dd>@claim.Value </dd>
+            @*<dt>_Claim.Properties</dt>*@
+             @foreach(var prop in claim.Properties){
+            <dt>@prop.Key</dt>
+            <dd>@prop.Value</dd>}
+          
+            }
+        </dl>
+        <hr/>
+        <p>@*<a class="btn btn-dark" asp-controller="Account" asp-action="Logout">Sign out</a>*@
+              <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button  type="submit" class="nav-link btn btn-link text-dark">Sign out</button>
+        </form>
+        </p>
+    </div>
+}
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <div>
+        <p>You are not signed in</p>
+        <p>
+            <a class="nav-link btn btn-link text-dark" asp-area="Identity" asp-page="/Account/Login">Sign in</a>
+        </p>
+    </div>
+}

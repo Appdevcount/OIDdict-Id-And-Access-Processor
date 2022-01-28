@@ -1,0 +1,38 @@
+[
+  {
+    "ClaimType": "A",
+    "ClaimValue": "A",
+    "Description": "A",
+    "UserOrRoleClaim": "User"
+  },
+  {
+    "ClaimType": "B",
+    "ClaimValue": "B",
+    "Description": "B",
+    "UserOrRoleClaim": "User"
+  },
+  {
+    "ClaimType": "C",
+    "ClaimValue": "C",
+    "Description": "C",
+    "UserOrRoleClaim": "User"
+  },
+  {
+    "ClaimType": "D",
+    "ClaimValue": "D",
+    "Description": "D",
+    "UserOrRoleClaim": "Role"
+  },
+  {
+    "ClaimType": "E",
+    "ClaimValue": "E",
+    "Description": "E",
+    "UserOrRoleClaim": "Role"
+  },
+  {
+    "ClaimType": "F",
+    "ClaimValue": "F",
+    "Description": "F",
+    "UserOrRoleClaim": "Role"
+  }
+]

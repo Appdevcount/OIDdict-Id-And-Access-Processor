@@ -1,0 +1,19 @@
+dotnet add package OpenIddict
+dotnet add package OpenIddict.AspNetCore
+dotnet add package OpenIddict.EntityFrameworkCore
+dotnet add package Microsoft.EntityFrameworkCore.InMemory
+
+
+Adding Open API support
+Add the Swashbuckle.AspNetCore nuget package
+
+Identity
+Installing NuGet package Microsoft.AspNetCore.Identity 2.2.0.
+Installing NuGet package Microsoft.AspNetCore.Identity.EntityFrameworkCore 6.0.1.
+Identity UI Scaffolding generation
+Installing NuGet package Microsoft.AspNetCore.Identity.UI 6.0.1.
+
+Scoffolding generation done for identity with add scoffolding item option
+
+Install-Package MailKit
+Install-Package MimeKit
